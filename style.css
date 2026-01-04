@@ -33,9 +33,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
   background-color: #000000;
   border-bottom: 1px solid #222;
+  padding: 1rem;
 }
 
 .logo {
@@ -60,6 +60,16 @@ body {
 
 .nav-links a:hover {
   color: #00ffff;
+}
+
+/* =========================
+   HAMBURGER MENU
+========================= */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #00ffff;
+  cursor: pointer;
 }
 
 /* =========================
@@ -89,15 +99,30 @@ p {
 ========================= */
 @media (max-width: 768px) {
 
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
+  .menu-toggle {
+    display: block;
   }
 
   .nav-links {
+    display: none;
+    flex-direction: column;
     width: 100%;
-    justify-content: space-around;
+    background-color: #000000;
+    border-top: 1px solid #222;
+    margin-top: 0.5rem;
+  }
+
+  .nav-links li {
+    padding: 0.8rem 0;
+    text-align: center;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+  }
+
+  .nav-links.show {
+    display: flex;
   }
 
   h1 {
@@ -106,9 +131,5 @@ p {
 
   p {
     font-size: 0.95rem;
-  }
-
-  .container {
-    padding: 2rem 1rem;
   }
 }
