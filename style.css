@@ -3,7 +3,7 @@
 ========================= */
 * {
   margin: 0;
-  padding: 0;
+  padding: 0 0;
   box-sizing: border-box;
 }
 
@@ -50,7 +50,7 @@ body::before {
 ========================= */
 .navbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: rgba(0, 0, 0, 0.45);
   padding: 1rem 1.5rem;
@@ -62,20 +62,20 @@ body::before {
   z-index: 1000;
   box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15);
   backdrop-filter: blur(12px);
-  margin: 0;
-  max-width: none;
-  gap: 2rem;
+}
+
+/* Spacer to balance centering when menu is on left */
+.navbar-spacer {
+  width: 30px;
 }
 
 /* =========================
-   SEARCH BAR (Main - replaces title)
+   SEARCH BAR - Centered
 ========================= */
-.main-search {
+.search-container {
   flex: 1;
   max-width: 600px;
-}
-
-.search-container {
+  margin: 0 2rem;
   display: flex;
   align-items: center;
   background: rgba(0, 0, 0, 0.4);
@@ -123,33 +123,9 @@ body::before {
   fill: #00ffff;
 }
 
-/* Mobile search in dropdown */
-.mobile-search {
-  display: none;
-}
-
 /* =========================
-   NAV LINKS & HAMBURGER
+   HAMBURGER MENU
 ========================= */
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.nav-links a {
-  color: #ccc;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: #00ffff;
-}
-
 .menu-toggle {
   display: none;
   width: 30px;
@@ -183,6 +159,27 @@ body::before {
 
 .menu-toggle.active span:nth-child(3) {
   transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* =========================
+   NAV LINKS
+========================= */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #00ffff;
 }
 
 /* =========================
@@ -282,14 +279,16 @@ body::before {
   }
 
   .navbar {
-    justify-content: space-between;
     padding: 1rem;
   }
 
-  .main-search {
-    flex: none;
+  .search-container {
+    margin: 0 1.5rem;
     max-width: none;
-    width: 100%;
+  }
+
+  .navbar-spacer {
+    display: none;
   }
 
   .nav-links {
@@ -310,11 +309,6 @@ body::before {
 
   .nav-links.show {
     display: flex;
-  }
-
-  .mobile-search {
-    display: flex;
-    margin-bottom: 1rem;
   }
 
   .hero h1 {
