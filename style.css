@@ -70,7 +70,7 @@ body::after {
   align-items: center;
   background: rgba(0, 0, 0, 0.3);
   padding: 1.2rem 2.5rem;
-  border: 1px solid rgba(255, 255, 255, 255);
+  border: 1px solid rgba(0, 255, 255, 0.3);
   position: relative;
   z-index: 1000;
   box-shadow: 0 8px 40px rgba(0, 255, 255, 0.2);
