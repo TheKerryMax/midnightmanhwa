@@ -42,25 +42,28 @@ body::before {
   max-width: 1200px;
   margin: auto;
   padding: 1rem;
+  padding-top: 110px; /* Space for fixed navbar */
 }
 
 /* =========================
-   NAVBAR (FIXED: Rounded bottom corners + premium glass effect)
+   NAVBAR (FIXED AT TOP)
 ========================= */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 0, 0, 0.45);                 /* more transparent */
+  background: rgba(0, 0, 0, 0.45);
   padding: 1rem 1.5rem;
   border-bottom: 1px solid rgba(0, 255, 255, 0.15);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15); /* softer cyan glow */
-  backdrop-filter: blur(12px);                     /* stronger frosted glass */
-  border-radius: 0 0 20px 20px;                     /* rounded bottom corners only */
-  margin: 0 1rem 2rem;                             /* pull in from sides + space below */
-  max-width: 1200px;                               /* matches .app */
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  margin: 0;
+  max-width: none;
 }
 
 .logo {
@@ -223,7 +226,6 @@ body::before {
   }
 
   .navbar {
-    margin: 0 0.5rem 2rem;               /* adjust for mobile */
     padding: 1rem;
   }
 
@@ -234,7 +236,7 @@ body::before {
     right: 0.5rem;
     background: rgba(0, 0, 0, 0.9);
     padding: 1rem 1.5rem;
-    border-radius: 16px;                 /* softer rounded dropdown */
+    border-radius: 16px;
     flex-direction: column;
     gap: 0.8rem;
     box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
