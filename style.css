@@ -1,5 +1,5 @@
 /* =========================
-   RESET
+   RESET & FONTS
 ========================= */
 * {
   margin: 0;
@@ -7,17 +7,36 @@
   box-sizing: border-box;
 }
 
-/* =========================
-   BODY
-========================= */
 body {
   background-color: #0a0f1c;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
   color: #e8ffff;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+}
+
+h1, h3, .logo {
+  font-family: 'Orbitron', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Dark overlay for readability */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10, 15, 28, 0.85);
+  z-index: -1;
 }
 
 /* =========================
-   APP
+   APP CONTAINER
 ========================= */
 .app {
   max-width: 1200px;
@@ -32,32 +51,37 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #000;
+  background: rgba(0, 0, 0, 0.7);
   padding: 1rem;
   border-bottom: 1px solid #222;
   position: relative;
-  z-index: 1000; /* ensure navbar is above everything */
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
 }
 
 .logo {
   color: #00ffff;
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 1.5rem;
-  z-index: 900;
+  gap: 2rem;
 }
 
 .nav-links a {
   color: #ccc;
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: #00ffff;
 }
 
@@ -65,12 +89,12 @@ body {
    HAMBURGER MENU
 ========================= */
 .menu-toggle {
-  display: none;   /* hidden by default, shown in mobile media query */
+  display: none;
   width: 30px;
   height: 22px;
   position: relative;
   cursor: pointer;
-  z-index: 1100;   /* make sure it’s above nav-links */
+  z-index: 1100;
 }
 
 .menu-toggle span {
@@ -83,18 +107,16 @@ body {
 }
 
 .menu-toggle span.middle {
-  width: 60%;    /* middle bar shorter */
+  width: 60%;
   margin-left: auto;
-  margin-right: auto;
 }
 
-/* Hamburger animation when open */
 .menu-toggle.active span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
 
 .menu-toggle.active span:nth-child(2) {
-  opacity: 0;   /* middle disappears */
+  opacity: 0;
 }
 
 .menu-toggle.active span:nth-child(3) {
@@ -106,16 +128,21 @@ body {
 ========================= */
 .hero {
   text-align: center;
-  padding: 4rem 1rem;
+  padding: 6rem 1rem 4rem;
 }
 
 .hero h1 {
+  font-size: 3.5rem;
   color: #00ffff;
-  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
 }
 
 .hero p {
-  color: #ccc;
+  font-size: 1.2rem;
+  color: #aaa;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* =========================
@@ -123,101 +150,116 @@ body {
 ========================= */
 .manhwa-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.2rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.8rem;
+  padding: 2rem 1rem;
 }
 
 .card {
   background: #050812;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  height: 320px;
   cursor: pointer;
+  transition: all 0.4s ease;
 }
 
 .card img {
   width: 100%;
-  height: auto;      
-  display: block;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(transparent, #050812);
+  pointer-events: none;
 }
 
 .card h3 {
-  font-size: 1rem;
-  margin: 0.5rem;
+  position: absolute;
+  bottom: 2.8rem;
+  left: 1rem;
+  font-size: 1.2rem;
   color: #00ffff;
+  text-shadow: 0 2px 10px #000;
+  z-index: 1;
 }
 
 .card span {
-  font-size: 0.85rem;
-  color: #aaa;
-  margin: 0 0.5rem 0.8rem;
-  display: block;
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1rem;
+  font-size: 0.9rem;
+  color: #ccc;
+  z-index: 1;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 15px #00ffff55;
+  transform: translateY(-12px);
+  box-shadow: 0 15px 35px rgba(0, 255, 255, 0.35);
 }
 
 /* =========================
-   MOBILE
+   MOBILE RESPONSIVE
 ========================= */
 @media (max-width: 768px) {
-
   .menu-toggle {
-    display: block;    /* visible on mobile */
+    display: block;
   }
 
   .nav-links {
-    display: none;         /* hidden by default */
+    display: none;
     position: absolute;
-    top: 60px;             /* below navbar */
+    top: 70px;
     right: 1rem;
-    background: #000;
-    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1rem;
     border-radius: 10px;
-    box-shadow: 0 0 15px #00ffff55;
     flex-direction: column;
-    gap: 0.5rem;
-    z-index: 1000;
+    gap: 0.8rem;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
   }
 
   .nav-links.show {
     display: flex;
   }
 
-  .nav-links li {
-    text-align: center;
-  }
-
-  .nav-links a {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    display: block;
-  }
-
-  /* Hero */
   .hero h1 {
-    font-size: 1.6rem;
+    font-size: 2.5rem;
   }
 
   .hero p {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
-  /* Manhwa grid */
   .manhwa-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .card {
+    height: 280px;
   }
 
   .card h3 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
+    bottom: 2.5rem;
   }
 
   .card span {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
