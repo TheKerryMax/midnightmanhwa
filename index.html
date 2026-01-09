@@ -4,151 +4,191 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Midnight Manhwa</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
+
   <style>
-    /* Improved card overlay - clean & professional */
+    /* =========================
+       MANHWA CARD
+    ========================= */
     .card {
       position: relative;
       overflow: hidden;
+      border-radius: 14px;
+      cursor: pointer;
     }
+
     .card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      display: block;
+      transition: transform 0.6s ease;
     }
-    .card:hover img {
-      transform: scale(1.15);
+
+    .card:hover img,
+    .card.hover img {
+      transform: scale(1.12);
     }
-    .card-info {
+
+    /* =========================
+       FADE + TITLE (SPAN)
+    ========================= */
+    .card-title-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
-      padding: 2rem 1rem 1rem;
-      text-align: left;
+      padding: 1.5rem 1rem 0.9rem;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.15),
+        transparent
+      );
+      pointer-events: none;
     }
-    .card-info h3 {
-      font-size: 1.3rem;
-      margin: 0 0 0.5rem;
-      text-shadow: 0 2px 10px #000;
+
+    .card-title-overlay span {
+      display: block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #00ffff;
+      text-shadow:
+        0 0 6px rgba(0,255,255,0.35),
+        0 2px 6px rgba(0,0,0,0.9);
     }
-    .card-info span {
-      font-size: 0.95rem;
-      opacity: 0.9;
+
+    .card:hover,
+    .card.hover {
+      box-shadow: 0 18px 45px rgba(0,255,255,0.4);
     }
-    .card:hover .card-info {
-      background: linear-gradient(transparent, rgba(0,0,0,0.9));
+
+    /* =========================
+       FAKE MANHWA (LOCK)
+    ========================= */
+    .coming-soon {
+      opacity: 0.6;
+      pointer-events: none;
     }
-    .card:hover {
-      box-shadow: 0 15px 40px rgba(0, 255, 255, 0.5);
+
+    .lock-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 1.1rem;
+      text-shadow: 0 0 6px rgba(0,0,0,0.8);
     }
   </style>
 </head>
+
 <body>
-  <div class="app">
+<div class="app">
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-      <div class="logo">
-        <img src="favicon.ico" alt="Midnight Manhwa Logo">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="favicon.ico" alt="Midnight Manhwa Logo">
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search..." />
+      <button type="button" id="searchButton">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path fill="currentColor"
+            d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l4.2 4.2a1 1 0 0 0 1.4-1.4L15.5 14zM10 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="menu-toggle" id="menuToggle">
+      <span></span><span class="middle"></span><span></span>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">Genres</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Midnight Manhwa</h1>
+    <p>Read dark fantasy, action, and mystery manhwa.</p>
+  </section>
+
+  <!-- MANHWA GRID -->
+  <section class="manhwa-grid">
+
+    <!-- REAL MANHWA -->
+    <a href="Genres/Manhwa/King%20of%20the%20Octagon/chapters.html"
+       class="card manhwa-link">
+      <img src="Images/king-of-octagon-cover.jpg" alt="King of the Octagon">
+      <div class="card-title-overlay">
+        <span>King of the Octagon</span>
       </div>
+    </a>
 
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search Midnight Manhwa..." />
-        <button type="button" id="searchButton">
-          <svg viewBox="0 0 24 24" width="22" height="22">
-            <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.47 6.47 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.01 7c.34 2.8 2.56 5.12 5.34 5.59a6.47 6.47 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-          </svg>
-        </button>
+    <!-- FAKE MANHWA -->
+    <div class="card coming-soon">
+      <span class="lock-icon">🔒</span>
+      <img src="Images/cover1.jpg" alt="Locked">
+      <div class="card-title-overlay">
+        <span>New Manhwa</span>
       </div>
+    </div>
 
-      <div class="menu-toggle" id="menuToggle">
-        <span></span>
-        <span class="middle"></span>
-        <span></span>
+    <div class="card coming-soon">
+      <span class="lock-icon">🔒</span>
+      <img src="Images/cover2.jpg" alt="Locked">
+      <div class="card-title-overlay">
+        <span>New Manhwa</span>
       </div>
+    </div>
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="#">Genres</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero">
-      <h1>Midnight Manhwa</h1>
-      <p>Read dark fantasy, action, and mystery manhwa.</p>
-    </section>
-
-    <!-- MANHWA GRID -->
-    <section class="manhwa-grid">
-
-      <!-- King of the Octagon -->
-      <a href="Genres/Manhwa/King%20of%20the%20Octagon/chapters.html" class="card">
-        <img src="Images/king-of-octagon-cover.jpg" alt="King of the Octagon">
-        <h3>King of the Octagon</h3>
-        <span>Action • Martial Arts • Drama</span>
-      </a>
-
-      <!-- Placeholder cards -->
-      <div class="card">
-        <img src="Images/cover1.jpg" alt="Dark Eclipse">
-        <h3>Dark Eclipse</h3>
-        <span>Fantasy • Action</span>
+    <div class="card coming-soon">
+      <span class="lock-icon">🔒</span>
+      <img src="Images/cover3.jpg" alt="Locked">
+      <div class="card-title-overlay">
+        <span>New Manhwa</span>
       </div>
-      <div class="card">
-        <img src="Images/cover2.jpg" alt="Crimson Night">
-        <h3>Crimson Night</h3>
-        <span>Action • Mystery</span>
-      </div>
-      <div class="card">
-        <img src="Images/cover3.jpg" alt="Void Walker">
-        <h3>Void Walker</h3>
-        <span>Dark Fantasy</span>
-      </div>
-      <div class="card">
-        <img src="Images/cover4.jpg" alt="Moonfall">
-        <h3>Moonfall</h3>
-        <span>Romance • Fantasy</span>
-      </div>
+    </div>
 
-    </section>
+  </section>
 
-  </div>
+</div>
 
-  <script>
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
-    menuToggle.addEventListener("click", () => {
-      menuToggle.classList.toggle("active");
-      navLinks.classList.toggle("show");
-    });
+<script>
+  /* DOUBLE TAP PREVIEW */
+  document.querySelectorAll(".manhwa-link").forEach(card => {
+    let tapped = false;
+    card.addEventListener("click", e => {
+      if (!tapped) {
+        e.preventDefault();
+        tapped = true;
+        card.classList.add("hover");
 
-    function performSearch() {
-      const query = document.getElementById("searchInput").value.trim().toLowerCase();
-      if (query) {
-        const cards = document.querySelectorAll('.card h3');
-        let found = false;
-        cards.forEach(card => {
-          if (card.textContent.toLowerCase().includes(query)) {
-            card.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            card.parentElement.style.boxShadow = '0 0 30px #00ffff';
-            setTimeout(() => { card.parentElement.style.boxShadow = ''; }, 2000);
-            found = true;
-          }
-        });
-        if (!found) alert(`No results for "${query}" yet!`);
+        setTimeout(() => {
+          tapped = false;
+          card.classList.remove("hover");
+        }, 900);
       }
-    }
+    });
+  });
 
-    document.getElementById("searchInput").addEventListener("keypress", e => e.key === "Enter" && performSearch());
-    document.getElementById("searchButton").addEventListener("click", performSearch);
-  </script>
+  /* MOBILE NAV */
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+  menuToggle.addEventListener("click", () => {
+    menuToggle.classList.toggle("active");
+    navLinks.classList.toggle("show");
+  });
+</script>
 
 </body>
 </html>

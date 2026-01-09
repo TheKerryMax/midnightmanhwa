@@ -4,48 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>King of the Octagon | Midnight Manhwa</title>
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
   <link rel="icon" href="../../../favicon.ico" type="image/x-icon">
+
+  <!-- Global CSS (will be overridden) -->
   <link rel="stylesheet" href="../../../style.css">
+
+  <!-- READER OVERRIDE STYLES -->
   <style>
+    /* =========================
+       HARD RESET FOR READER
+    ========================= */
     body {
-      background: #0a0a0a;
-      margin: 0;
-      padding: 0;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #0a0a0a !important;
       font-family: 'Poppins', sans-serif;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
 
-    /* Chapter title */
+    /* Kill global overlay */
+    body::before {
+      display: none !important;
+      content: none !important;
+    }
+
+    /* =========================
+       CHAPTER TITLE BAR
+    ========================= */
     #chapter-title {
-     display: flex;
-     justify-content: center; /* horizontal center */
-     align-items: center;     /* vertical center */
-     height: 60px;            /* fixed height for the top bar */
-     color: #00ffff;
-     font-family: 'Orbitron', sans-serif;
-     font-size: 1.8em;
-      text-shadow: 0 0 15px #00ffff;
-      margin: 0;
       position: sticky;
       top: 0;
-     background: #0a0a0a;
-      z-index: 10;
-     transition: opacity 0.3s;
-     padding: 0 20px; /* horizontal padding */
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      color: #00ffff;
+      background: #0a0a0a;
+      text-shadow: 0 0 12px #00ffff;
+      z-index: 50;
+      transition: opacity 0.25s ease;
+      user-select: none;
     }
 
-    /* Reader container */
+    /* =========================
+       READER IMAGE STACK
+    ========================= */
     #reader {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0;
     }
 
     .page-img {
       width: 100%;
-      height: auto;
       display: block;
       margin: 0;
       padding: 0;
@@ -53,115 +71,143 @@
       box-shadow: none;
     }
 
-    /* Navigation buttons */
+    /* =========================
+       NAVIGATION BAR
+    ========================= */
     #nav {
       position: fixed;
-      bottom: 20px;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(10,15,28,0.7);
-      padding: 8px 20px; /* smaller */
-      border-radius: 30px;
-      backdrop-filter: blur(10px);
-      border: 1px solid #00ffff;
       display: flex;
       gap: 10px;
-      align-items: center; /* vertically center text and arrow */
-      transition: opacity 0.3s;
-      z-index: 20;
-    }
-
-    #nav.hidden {
-      opacity: 0;
-      pointer-events: none;
+      padding: 6px 14px;
+      border-radius: 26px;
+      background: rgba(10, 15, 28, 0.75);
+      border: 1px solid rgba(0, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      transition: opacity 0.25s ease;
     }
 
     #nav button {
+      background: none;
+      border: none;
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      padding: 4px 10px;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px; /* space between arrow and text */
-      background: transparent;
-      color: #00ffff;
-      border: none;
-      padding: 6px 12px;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
+      gap: 6px;
       transition: color 0.2s, text-shadow 0.2s;
     }
 
     #nav button:hover {
-      color: white;
+      color: #ffffff;
       text-shadow: 0 0 10px #00ffff;
     }
 
-    /* Custom arrows using CSS */
-    .arrow-left::before {
-      content: "⟵"; /* left arrow */
+    /* Custom arrows */
+    .prev::before { content: "⟵"; }
+    .next::after { content: "⟶"; }
+
+    /* =========================
+       FULLSCREEN MODE
+    ========================= */
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .arrow-right::after {
-      content: "⟶"; /* right arrow */
-    }
+    /* =========================
+       MOBILE TWEAKS
+    ========================= */
+    @media (max-width: 768px) {
+      #chapter-title {
+        font-size: 1.25rem;
+        height: 48px;
+      }
 
+      #nav {
+        bottom: 10px;
+        padding: 5px 12px;
+        gap: 6px;
+      }
+
+      #nav button {
+        font-size: 0.85rem;
+        padding: 3px 8px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <h2 id="chapter-title"></h2>
+  <!-- CHAPTER TITLE -->
+  <div id="chapter-title"></div>
+
+  <!-- READER -->
   <div id="reader"></div>
 
+  <!-- NAVIGATION -->
   <div id="nav">
-    <button id="prev" class="arrow-left">Prev</button>
+    <button id="prev" class="prev">Prev</button>
     <button id="chapters">Chapters</button>
-    <button id="next" class="arrow-right">Next</button>
+    <button id="next" class="next">Next</button>
   </div>
 
   <script>
+    /* =========================
+       CHAPTER SETUP
+    ========================= */
     const params = new URLSearchParams(location.search);
-    let chapter = parseInt(params.get('chapter')) || 1;
+    let chapter = parseInt(params.get("chapter")) || 1;
     const maxChapter = 3;
-
-    const chapterTitle = document.getElementById('chapter-title');
-    chapterTitle.textContent = `King of the Octagon - Chapter ${chapter}`;
-
-    const baseFolder = `chapter (${chapter})/`;
-    const reader = document.getElementById('reader');
     const totalPages = 10;
 
-    // Load all images
+    const title = document.getElementById("chapter-title");
+    title.textContent = `King of the Octagon - Chapter ${chapter}`;
+
+    const reader = document.getElementById("reader");
+    const baseFolder = `chapter (${chapter})/`;
+
+    /* Load pages */
     for (let i = 1; i <= totalPages; i++) {
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       img.src = `${baseFolder}page (${i}).png`;
-      img.alt = `Page ${i}`;
-      img.className = 'page-img';
-      img.loading = 'lazy';
+      img.className = "page-img";
+      img.loading = "lazy";
       reader.appendChild(img);
     }
 
-    // Navigation buttons
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
-    const chaptersBtn = document.getElementById('chapters');
-    const nav = document.getElementById('nav');
+    /* =========================
+       NAVIGATION
+    ========================= */
+    document.getElementById("prev").onclick = () =>
+      chapter > 1 && (location.href = `reader.html?chapter=${chapter - 1}`);
 
-    prevBtn.onclick = () => chapter > 1 && (location.href = `reader.html?chapter=${chapter-1}`);
-    nextBtn.onclick = () => chapter < maxChapter && (location.href = `reader.html?chapter=${chapter+1}`);
-    chaptersBtn.onclick = () => location.href = 'chapters.html';
+    document.getElementById("next").onclick = () =>
+      chapter < maxChapter && (location.href = `reader.html?chapter=${chapter + 1}`);
 
-    prevBtn.disabled = chapter <= 1;
-    nextBtn.disabled = chapter >= maxChapter;
+    document.getElementById("chapters").onclick = () =>
+      location.href = "chapters.html";
 
-    // Double-tap to hide/show nav + chapter title
+    /* =========================
+       DOUBLE TAP FULLSCREEN
+    ========================= */
     let lastTap = 0;
-    document.body.addEventListener('click', () => {
-      const currentTime = new Date().getTime();
-      const tapLength = currentTime - lastTap;
-      if (tapLength < 300 && tapLength > 0) {
-        nav.classList.toggle('hidden');
-        chapterTitle.style.opacity = nav.classList.contains('hidden') ? '0' : '1';
+    const nav = document.getElementById("nav");
+
+    document.body.addEventListener("click", () => {
+      const now = Date.now();
+      if (now - lastTap < 300) {
+        nav.classList.toggle("hidden");
+        title.classList.toggle("hidden");
       }
-      lastTap = currentTime;
+      lastTap = now;
     });
   </script>
 
