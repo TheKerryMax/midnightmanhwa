@@ -12,7 +12,7 @@
 
   <div class="app">
 
-    <!-- NAVBAR (unchanged) -->
+    <!-- NAVBAR -->
     <nav class="navbar">
       <div class="logo">
         <img src="favicon.ico" alt="Midnight Manhwa Logo">
@@ -40,23 +40,23 @@
       </ul>
     </nav>
 
-    <!-- HERO (unchanged) -->
+    <!-- HERO -->
     <section class="hero">
       <h1>Midnight Manhwa</h1>
       <p>Read dark fantasy, action, and mystery manhwa.</p>
     </section>
 
-    <!-- MANHWA GRID - Updated with real cover + link for King of the Octagon -->
+    <!-- MANHWA GRID -->
     <section class="manhwa-grid">
 
-      <!-- King of the Octagon - Clickable card linking to Chapter 1 -->
-      <a href="reader.html?chapter=1" class="card">
-        <img src="King%20of%20the%20Octagon/chapter%20(1)/page%20(1).png" alt="King of the Octagon Cover">
+      <!-- King of the Octagon - Now goes to chapter selection -->
+      <a href="chapters.html" class="card">
+        <img src="https://static.wikia.nocookie.net/webtoon/images/2/29/King_of_the_Octagon_Banner.png/revision/latest" alt="King of the Octagon">
         <h3>King of the Octagon</h3>
         <span>Action • Martial Arts • Drama</span>
       </a>
 
-      <!-- Original placeholder cards (kept as non-clickable for now) -->
+      <!-- Placeholder cards -->
       <div class="card">
         <img src="images/cover1.jpg" alt="Dark Eclipse">
         <h3>Dark Eclipse</h3>
@@ -77,32 +77,28 @@
         <h3>Moonfall</h3>
         <span>Romance • Fantasy</span>
       </div>
+
     </section>
 
   </div>
 
-  <!-- SCRIPTS (unchanged + small addition for future search if needed) -->
   <script>
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
-    const searchInput = document.getElementById("searchInput");
-    const searchButton = document.getElementById("searchButton");
-
     menuToggle.addEventListener("click", () => {
       menuToggle.classList.toggle("active");
       navLinks.classList.toggle("show");
     });
 
     function performSearch() {
-      const query = searchInput.value.trim().toLowerCase();
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
       if (query) {
-        // Simple client-side search: highlight or scroll to matching title
         const cards = document.querySelectorAll('.card h3');
         let found = false;
         cards.forEach(card => {
           if (card.textContent.toLowerCase().includes(query)) {
             card.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            card.parentElement.style.boxShadow = '0 0 30px #ff4444';
+            card.parentElement.style.boxShadow = '0 0 30px #00ffff';
             setTimeout(() => { card.parentElement.style.boxShadow = ''; }, 2000);
             found = true;
           }
@@ -111,11 +107,10 @@
       }
     }
 
-    searchInput.addEventListener("keypress", (e) => {
+    document.getElementById("searchInput").addEventListener("keypress", (e) => {
       if (e.key === "Enter") performSearch();
     });
-
-    searchButton.addEventListener("click", performSearch);
+    document.getElementById("searchButton").addEventListener("click", performSearch);
   </script>
 
 </body>
