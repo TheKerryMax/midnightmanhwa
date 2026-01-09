@@ -8,14 +8,21 @@
   <link rel="icon" href="../../../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../../../style.css">
   <style>
-    body { background: #0a0a0a; margin: 0; }
-    #chapter-title { text-align: center; padding: 80px 20px 30px; color: #00ffff; font-family: 'Orbitron'; font-size: 2.8em; text-shadow: 0 0 25px #00ffff; }
-    #reader { max-width: 900px; margin: 0 auto; padding-bottom: 120px; }
-    .page-img { max-width: 100%; height: auto; display: block; margin: 20px auto; border-radius: 12px; box-shadow: 0 0 30px rgba(0,255,255,0.4); }
+    body { background: #0a0a0a; margin: 0; padding: 0; }
+    #chapter-title { text-align: center; padding: 80px 20px 20px; color: #00ffff; font-family: 'Orbitron'; font-size: 2.8em; text-shadow: 0 0 25px #00ffff; margin: 0; }
+    #reader { max-width: 900px; margin: 0 auto; padding: 0; }
+    .page-img { 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+      margin: 0; 
+      padding: 0;
+      border: none;
+      box-shadow: none; /* Removed shadow for seamless feel */
+    }
     #nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(10,15,28,0.9); padding: 15px 40px; border-radius: 50px; backdrop-filter: blur(15px); border: 2px solid #00ffff; }
     #nav button { background: transparent; color: #00ffff; border: none; padding: 12px 30px; margin: 0 12px; font-size: 1.3em; font-weight: bold; cursor: pointer; }
     #nav button:hover { color: white; text-shadow: 0 0 15px #00ffff; }
-    #nav button:disabled { opacity: 0.4; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -50,6 +57,7 @@
       reader.appendChild(img);
     }
 
+    // Navigation (unchanged)
     document.getElementById('prev').onclick = () => chapter > 1 && (location.href = `reader.html?chapter=${chapter-1}`);
     document.getElementById('next').onclick = () => chapter < maxChapter && (location.href = `reader.html?chapter=${chapter+1}`);
     document.getElementById('home').onclick = () => location.href = '../../../index.html';
