@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>King of the Octagon | Midnight Manhwa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #0a0a0a; margin: 0; }
+    #chapter-title { text-align: center; padding: 100px 20px 40px; color: #ff4444; font-family: 'Orbitron', sans-serif; font-size: 2.5em; text-shadow: 0 0 20px #ff4444; }
+    #reader { max-width: 900px; margin: 0 auto; padding: 0 10px; }
+    .page-img { max-width: 100%; height: auto; display: block; margin: 15px auto; border-radius: 10px; box-shadow: 0 0 25px rgba(255, 68, 68, 0.4); }
+    #nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(20,20,30,0.8); padding: 12px 25px; border-radius: 50px; backdrop-filter: blur(15px); border: 1px solid #ff4444; }
+    #nav button { background: transparent; color: #ff4444; border: none; padding: 10px 20px; margin: 0 15px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+    #nav button:hover { color: white; text-shadow: 0 0 10px #ff4444; }
+    #nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+  <h2 id="chapter-title"></h2>
+  <div id="reader"></div>
+
+  <div id="nav">
+    <button id="prev">← Previous Chapter</button>
+    <button id="home">Home</button>
+    <button id="next">Next Chapter →</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    let chapter = parseInt(params.get('chapter')) || 1;
+    const maxChapter = 3;
+
+    // Page counts: Chapter 1 = your real 10 pages, others fake for testing
+    const pageCounts = { 1: 10, 2: 20, 3: 25 };
+    const totalPages = pageCounts[chapter] || 20;
+
+    const baseFolder = `King of the Octagon/chapter (${chapter})/`;
+    const realBase = `King of the Octagon/chapter (1)/`; // For real images
+    const fallbackImg = `${realBase}page (1).png`;
+
+    document.getElementById('chapter-title').textContent = `King of the Octagon - Chapter ${chapter}`;
+
+    const reader = document.getElementById('reader');
+
+    for (let i = 1; i <= totalPages; i++) {
+      const img = document.createElement('img');
+      img.className = 'page-img';
+      img.loading = 'lazy';
+      img.alt = `Page ${i}`;
+
+      // Use real images for Chapter 1 (1-10)
+      if (chapter === 1 && i <= 10) {
+        img.src = `${realBase}page (${i}).png`;
+      } else {
+        // Reuse page (1).png for all testing pages
+        img.src = fallbackImg;
+      }
+
+      reader.appendChild(img);
+    }
+
+    // Navigation
+    document.getElementById('prev').disabled = chapter <= 1;
+    document.getElementById('next').disabled = chapter >= maxChapter;
+
+    document.getElementById('prev').onclick = () => {
+      if (chapter > 1) location.href = `reader.html?chapter=${chapter-1}`;
+    };
+    document.getElementById('next').onclick = () => {
+      if (chapter < maxChapter) location.href = `reader.html?chapter=${chapter+1}`;
+    };
+    document.getElementById('home').onclick = () => location.href = 'index.html';
+  </script>
+
+</body>
+</html>

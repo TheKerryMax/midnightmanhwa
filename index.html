@@ -12,14 +12,12 @@
 
   <div class="app">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR (unchanged) -->
     <nav class="navbar">
-      <!-- Logo (using favicon) -->
       <div class="logo">
         <img src="favicon.ico" alt="Midnight Manhwa Logo">
       </div>
 
-      <!-- Search Bar (centered) -->
       <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search Midnight Manhwa..." />
         <button type="button" id="searchButton">
@@ -29,14 +27,12 @@
         </button>
       </div>
 
-      <!-- Hamburger Menu (right) -->
       <div class="menu-toggle" id="menuToggle">
         <span></span>
         <span class="middle"></span>
         <span></span>
       </div>
 
-      <!-- Dropdown Menu -->
       <ul class="nav-links" id="navLinks">
         <li><a href="#" class="active">Home</a></li>
         <li><a href="#">Genres</a></li>
@@ -44,14 +40,23 @@
       </ul>
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO (unchanged) -->
     <section class="hero">
       <h1>Midnight Manhwa</h1>
       <p>Read dark fantasy, action, and mystery manhwa.</p>
     </section>
 
-    <!-- MANHWA GRID -->
+    <!-- MANHWA GRID - Updated with real cover + link for King of the Octagon -->
     <section class="manhwa-grid">
+
+      <!-- King of the Octagon - Clickable card linking to Chapter 1 -->
+      <a href="reader.html?chapter=1" class="card">
+        <img src="King%20of%20the%20Octagon/chapter%20(1)/page%20(1).png" alt="King of the Octagon Cover">
+        <h3>King of the Octagon</h3>
+        <span>Action • Martial Arts • Drama</span>
+      </a>
+
+      <!-- Original placeholder cards (kept as non-clickable for now) -->
       <div class="card">
         <img src="images/cover1.jpg" alt="Dark Eclipse">
         <h3>Dark Eclipse</h3>
@@ -76,36 +81,40 @@
 
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS (unchanged + small addition for future search if needed) -->
   <script>
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
     const searchInput = document.getElementById("searchInput");
     const searchButton = document.getElementById("searchButton");
 
-    // Toggle mobile menu
     menuToggle.addEventListener("click", () => {
       menuToggle.classList.toggle("active");
       navLinks.classList.toggle("show");
     });
 
-    // Search function
     function performSearch() {
-      const query = searchInput.value.trim();
+      const query = searchInput.value.trim().toLowerCase();
       if (query) {
-        alert(`Searching for: "${query}"\n(Real search functionality coming soon!)`);
-        // Later: Add actual filtering or redirect here
+        // Simple client-side search: highlight or scroll to matching title
+        const cards = document.querySelectorAll('.card h3');
+        let found = false;
+        cards.forEach(card => {
+          if (card.textContent.toLowerCase().includes(query)) {
+            card.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            card.parentElement.style.boxShadow = '0 0 30px #ff4444';
+            setTimeout(() => { card.parentElement.style.boxShadow = ''; }, 2000);
+            found = true;
+          }
+        });
+        if (!found) alert(`No results for "${query}" yet!`);
       }
     }
 
-    // Trigger search on Enter key
     searchInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        performSearch();
-      }
+      if (e.key === "Enter") performSearch();
     });
 
-    // Trigger search on button click
     searchButton.addEventListener("click", performSearch);
   </script>
 
