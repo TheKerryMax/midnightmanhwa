@@ -54,7 +54,7 @@
     // Navigation (stays inside the same folder)
     document.getElementById('prev').onclick = () => chapter > 1 && (location.href = `reader.html?chapter=${chapter-1}`);
     document.getElementById('next').onclick = () => chapter < maxChapter && (location.href = `reader.html?chapter=${chapter+1}`);
-    document.getElementById('home').onclick = () => location.href = '../../index.html';
+    document.getElementById('home').onclick = () => location.href = '../../../index.html';
     document.getElementById('chapters').onclick = () => location.href = 'chapters.html';
 
     document.getElementById('prev').disabled = chapter <= 1;
