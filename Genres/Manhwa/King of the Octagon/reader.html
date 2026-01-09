@@ -3,64 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>King of the Octagon | Midnight Manhwa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css">
+  <title>King of the Octagon | Reader</title>
+
+  <link rel="icon" href="../../../favicon.ico">
+  <link rel="stylesheet" href="../../../style.css">
+
   <style>
-    body { background: #0a0a0a; margin: 0; }
-    #chapter-title { text-align: center; padding: 80px 20px 30px; color: #00ffff; font-family: 'Orbitron'; font-size: 2.8em; text-shadow: 0 0 25px #00ffff; }
-    #reader { max-width: 900px; margin: 0 auto; padding-bottom: 120px; }
-    .page-img { max-width: 100%; height: auto; display: block; margin: 20px auto; border-radius: 12px; box-shadow: 0 0 30px rgba(0,255,255,0.4); }
-    #nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(10,15,28,0.9); padding: 15px 40px; border-radius: 50px; backdrop-filter: blur(15px); border: 2px solid #00ffff; }
-    #nav button { background: transparent; color: #00ffff; border: none; padding: 12px 30px; margin: 0 12px; font-size: 1.3em; font-weight: bold; cursor: pointer; }
-    #nav button:hover { color: white; text-shadow: 0 0 15px #00ffff; }
-    #nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+    body { background:#0a0a0a; margin:0; }
+    #title {
+      text-align:center;
+      color:#00ffff;
+      padding:60px 20px;
+    }
+    #reader {
+      max-width:900px;
+      margin:auto;
+      padding-bottom:120px;
+    }
+    img {
+      width:100%;
+      margin:20px auto;
+      border-radius:12px;
+    }
+    #nav {
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,.85);
+      padding:15px 30px;
+      border-radius:40px;
+    }
+    button {
+      background:none;
+      color:#00ffff;
+      border:none;
+      font-size:1.1em;
+      margin:0 8px;
+      cursor:pointer;
+    }
+    button:disabled {
+      opacity:0.4;
+      cursor:not-allowed;
+    }
   </style>
 </head>
 <body>
 
-  <h2 id="chapter-title"></h2>
-  <div id="reader"></div>
+<h2 id="title"></h2>
+<div id="reader"></div>
 
-  <div id="nav">
-    <button id="prev">← Prev</button>
-    <button id="chapters">Chapters</button>
-    <button id="home">Home</button>
-    <button id="next">Next →</button>
-  </div>
+<div id="nav">
+  <button id="prev">← Prev</button>
+  <button onclick="location.href='chapters.html'">Chapters</button>
+  <button onclick="location.href='../../../index.html'">Home</button>
+  <button id="next">Next →</button>
+</div>
 
-  <script>
-    const params = new URLSearchParams(location.search);
-    let chapter = parseInt(params.get('chapter')) || 1;
-    const maxChapter = 3;
+<script>
+  const params = new URLSearchParams(location.search);
+  let chapter = parseInt(params.get("chapter")) || 1;
 
-    document.getElementById('chapter-title').textContent = `King of the Octagon - Chapter ${chapter}`;
+  const maxChapter = 3;
+  const totalPages = 10;
 
-    // EXACT path to your deep nested chapters
-    const baseFolder = `Images/king-of-octagon-cover.jpg (${chapter})/`;
-    const reader = document.getElementById('reader');
+  document.getElementById("title").innerText =
+    `King of the Octagon - Chapter ${chapter}`;
 
-    const totalPages = 10; // your real 10 pages per chapter
+  const reader = document.getElementById("reader");
+  const baseFolder = `chapter (${chapter})/`;
 
-    for (let i = 1; i <= totalPages; i++) {
-      const img = document.createElement('img');
-      img.src = `${baseFolder}page (${i}).png`;
-      img.alt = `Page ${i}`;
-      img.className = 'page-img';
-      img.loading = 'lazy';
-      reader.appendChild(img);
-    }
+  for (let i = 1; i <= totalPages; i++) {
+    const img = document.createElement("img");
+    img.src = `${baseFolder}page (${i}).png`;
+    img.alt = `Page ${i}`;
+    img.loading = "lazy";
+    reader.appendChild(img);
+  }
 
-    // Navigation
-    document.getElementById('prev').onclick = () => chapter > 1 && (location.href = `reader.html?chapter=${chapter-1}`);
-    document.getElementById('next').onclick = () => chapter < maxChapter && (location.href = `reader.html?chapter=${chapter+1}`);
-    document.getElementById('home').onclick = () => location.href = 'index.html';
-    document.getElementById('chapters').onclick = () => location.href = 'chapters.html';
+  prev.onclick = () =>
+    chapter > 1 && (location.href = `reader.html?chapter=${chapter - 1}`);
 
-    document.getElementById('prev').disabled = chapter <= 1;
-    document.getElementById('next').disabled = chapter >= maxChapter;
-  </script>
+  next.onclick = () =>
+    chapter < maxChapter && (location.href = `reader.html?chapter=${chapter + 1}`);
+
+  prev.disabled = chapter <= 1;
+  next.disabled = chapter >= maxChapter;
+</script>
 
 </body>
 </html>
