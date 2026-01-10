@@ -231,7 +231,9 @@ html {
   font-size: 1.1rem;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE MENU
+========================= */
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -266,7 +268,12 @@ html {
   transform: rotate(-45deg) translate(6px,-6px);
 }
 
+/* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
   .nav-links {
     display: none;
     position: absolute;
@@ -278,7 +285,9 @@ html {
     border-radius: 16px;
     width: 90%;
     max-width: 300px;
+    gap: 1rem;
   }
+
   .nav-links.show {
     display: flex;
   }
