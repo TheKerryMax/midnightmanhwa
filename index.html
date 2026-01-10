@@ -1,194 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Midnight Manhwa</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midnight Manhwa</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <style>
-    /* =========================
-       MANHWA CARD
-    ========================= */
-    .card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      cursor: pointer;
-    }
+<style>
+/* =========================
+   RESET & BASE
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s ease;
-    }
+body {
+  background: #0a0f1c;
+  color: #e8ffff;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+}
 
-    .card:hover img,
-    .card.hover img {
-      transform: scale(1.12);
-    }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 28, 0.85);
+  z-index: -1;
+}
 
-    /* =========================
-       FADE + TITLE (SPAN)
-    ========================= */
-    .card-title-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1.5rem 1rem 0.9rem;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.15),
-        transparent
-      );
-      pointer-events: none;
-    }
+h1, h3 {
+  font-family: 'Orbitron', sans-serif;
+}
 
-    .card-title-overlay span {
-      display: block;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #00ffff;
-      text-shadow:
-        0 0 6px rgba(0,255,255,0.35),
-        0 2px 6px rgba(0,0,0,0.9);
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    .card:hover,
-    .card.hover {
-      box-shadow: 0 18px 45px rgba(0,255,255,0.4);
-    }
+/* =========================
+   APP
+========================= */
+.app {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  padding-top: 110px;
+}
 
-    /* =========================
-       FAKE MANHWA (LOCK)
-    ========================= */
-    .coming-soon {
-      opacity: 0.6;
-      pointer-events: none;
-    }
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,255,255,0.15);
+  z-index: 1000;
+}
 
-    .lock-icon {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      font-size: 1.1rem;
-      text-shadow: 0 0 6px rgba(0,0,0,0.8);
-    }
-  </style>
+/* LOGO */
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+
+/* SEARCH BAR */
+.search-container {
+  flex: 1;
+  max-width: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0,0,0,0.5);
+  border-radius: 30px;
+  padding: 0.4rem 1rem;
+  border: 1.5px solid rgba(0,255,255,0.25);
+  transition: all 0.3s ease;
+}
+
+.search-container input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e8ffff;
+  font-size: 1rem;
+}
+
+.search-container input::placeholder {
+  color: #777;
+}
+
+#searchButton {
+  background: none;
+  border: none;
+  color: #00ffff;
+  cursor: pointer;
+}
+
+/* NAV LINKS */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ccc;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #00ffff;
+}
+
+/* GENRE DROPDOWN */
+.genre-menu {
+  position: relative;
+}
+
+.genre-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  flex-direction: column;
+  background: rgba(0,0,0,0.9);
+  border: 1px solid rgba(0,255,255,0.25);
+  border-radius: 14px;
+  min-width: 180px;
+  box-shadow: 0 15px 35px rgba(0,255,255,0.25);
+  z-index: 2000;
+}
+
+.genre-dropdown li a {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  color: #ccc !important;
+  text-decoration: none;
+}
+
+.genre-dropdown li a:hover {
+  background: rgba(0,255,255,0.15);
+  color: #00ffff !important;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 6rem 1rem 4rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #00ffff;
+  text-shadow: 0 0 20px rgba(0,255,255,0.5);
+}
+
+.hero p {
+  color: #aaa;
+}
+
+/* GRID & CARDS */
+.manhwa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.8rem;
+  padding: 2rem 1rem;
+}
+
+.card {
+  position: relative;
+  height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #050812;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0,255,255,0.35);
+}
+
+.card-title-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 1rem 0.9rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.15), transparent);
+  pointer-events: none;
+}
+
+.card-title-overlay span {
+  display: block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #00ffff;
+  text-shadow:
+    0 0 6px rgba(0,255,255,0.35),
+    0 2px 6px rgba(0,0,0,0.9);
+}
+
+.coming-soon {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.lock-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.1rem;
+}
+
+/* MOBILE */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 4px;
+  background-color: #00ffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle span.middle {
+  width: 60%;
+  margin-left: auto;
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px,5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px,-6px);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 80px;
+    right: 0.5rem;
+    flex-direction: column;
+    background: rgba(0,0,0,0.9);
+    padding: 1.2rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 300px;
+  }
+  .nav-links.show {
+    display: flex;
+  }
+}
+</style>
 </head>
 
 <body>
 <div class="app">
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="logo">
-      <img src="favicon.ico" alt="Midnight Manhwa Logo">
-    </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">
+    <img src="favicon.ico" alt="Midnight Manhwa Logo">
+  </div>
 
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search..." />
-      <button type="button" id="searchButton">
-        <svg viewBox="0 0 24 24" width="20" height="20">
-          <path fill="currentColor"
-            d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l4.2 4.2a1 1 0 0 0 1.4-1.4L15.5 14zM10 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
-        </svg>
-      </button>
-    </div>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search..." />
+    <button type="button" id="searchButton">
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path fill="currentColor"
+          d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 1 0-.7.7l.3.3v.8l4.2 4.2a1 1 0 0 0 1.4-1.4L15.5 14zM10 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+      </svg>
+    </button>
+  </div>
 
-    <div class="menu-toggle" id="menuToggle">
-      <span></span><span class="middle"></span><span></span>
-    </div>
+  <div class="menu-toggle" id="menuToggle">
+    <span></span><span class="middle"></span><span></span>
+  </div>
 
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#" class="active">Home</a></li>
-      <li><a href="#">Genres</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
-  </nav>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" class="active">Home</a></li>
+    <li class="genre-menu">
+      <a href="#" id="genreToggle">Genres ▾</a>
+      <ul class="genre-dropdown">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Fantasy</a></li>
+        <li><a href="#">Martial Arts</a></li>
+      </ul>
+    </li>
+    <li><a href="#">About</a></li>
+  </ul>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Midnight Manhwa</h1>
-    <p>Read dark fantasy, action, and mystery manhwa.</p>
-  </section>
+<!-- HERO -->
+<section class="hero">
+  <h1>Midnight Manhwa</h1>
+  <p>Read dark fantasy, action, and mystery manhwa.</p>
+</section>
 
-  <!-- MANHWA GRID -->
-  <section class="manhwa-grid">
+<!-- MANHWA GRID -->
+<section class="manhwa-grid">
+  <a href="Genres/Manhwa/King%20of%20the%20Octagon/chapters.html"
+     class="card manhwa-link"
+     data-title="king of the octagon">
+    <img src="Images/king-of-octagon-cover.jpg" alt="King of the Octagon">
+    <div class="card-title-overlay"><span>King of the Octagon</span></div>
+  </a>
 
-    <!-- REAL MANHWA -->
-    <a href="Genres/Manhwa/King%20of%20the%20Octagon/chapters.html"
-       class="card manhwa-link">
-      <img src="Images/king-of-octagon-cover.jpg" alt="King of the Octagon">
-      <div class="card-title-overlay">
-        <span>King of the Octagon</span>
-      </div>
-    </a>
-
-    <!-- FAKE MANHWA -->
-    <div class="card coming-soon">
-      <span class="lock-icon">🔒</span>
-      <img src="Images/cover1.jpg" alt="Locked">
-      <div class="card-title-overlay">
-        <span>New Manhwa</span>
-      </div>
-    </div>
-
-    <div class="card coming-soon">
-      <span class="lock-icon">🔒</span>
-      <img src="Images/cover2.jpg" alt="Locked">
-      <div class="card-title-overlay">
-        <span>New Manhwa</span>
-      </div>
-    </div>
-
-    <div class="card coming-soon">
-      <span class="lock-icon">🔒</span>
-      <img src="Images/cover3.jpg" alt="Locked">
-      <div class="card-title-overlay">
-        <span>New Manhwa</span>
-      </div>
-    </div>
-
-  </section>
-
+  <div class="card coming-soon locked">
+    <span class="lock-icon">🔒</span>
+    <img src="Images/king-of-octagon-cover.jpg" alt="Locked">
+    <div class="card-title-overlay"><span>New Manhwa</span></div>
+  </div>
+  <div class="card coming-soon locked">
+    <span class="lock-icon">🔒</span>
+    <img src="Images/king-of-octagon-cover.jpg" alt="Locked">
+    <div class="card-title-overlay"><span>New Manhwa</span></div>
+  </div>
+</section>
 </div>
 
 <script>
-  /* DOUBLE TAP PREVIEW */
-  document.querySelectorAll(".manhwa-link").forEach(card => {
-    let tapped = false;
-    card.addEventListener("click", e => {
-      if (!tapped) {
-        e.preventDefault();
-        tapped = true;
-        card.classList.add("hover");
+/* SEARCH SYSTEM */
+const searchInput = document.getElementById("searchInput");
+const searchButton = document.getElementById("searchButton");
 
-        setTimeout(() => {
-          tapped = false;
-          card.classList.remove("hover");
-        }, 900);
-      }
-    });
-  });
+function performSearch() {
+  const query = searchInput.value.toLowerCase().trim();
+  const cards = document.querySelectorAll(".manhwa-link");
+  const locked = document.querySelectorAll(".locked");
 
-  /* MOBILE NAV */
-  const menuToggle = document.getElementById("menuToggle");
-  const navLinks = document.getElementById("navLinks");
-  menuToggle.addEventListener("click", () => {
-    menuToggle.classList.toggle("active");
-    navLinks.classList.toggle("show");
+  // Hide locked manhwa while searching
+  locked.forEach(c => c.style.display = query ? "none" : "");
+
+  // Filter readable manhwa
+  cards.forEach(card => {
+    const title = card.dataset.title;
+    card.style.display = title.includes(query) ? "" : "none";
   });
+}
+
+searchInput.addEventListener("input", performSearch);
+searchButton.addEventListener("click", performSearch);
+
+/* DOUBLE TAP CARD PREVIEW */
+document.querySelectorAll(".manhwa-link").forEach(card => {
+  let tapped = false;
+  card.addEventListener("click", e => {
+    if (!tapped) {
+      e.preventDefault();
+      tapped = true;
+      card.classList.add("hover");
+      setTimeout(() => {
+        tapped = false;
+        card.classList.remove("hover");
+      }, 900);
+    }
+  });
+});
+
+/* GENRE MENU CLICK FIX */
+const genreToggle = document.getElementById("genreToggle");
+const genreDropdown = genreToggle.nextElementSibling;
+let genreOpen = false;
+
+genreToggle.addEventListener("click", e => {
+  e.preventDefault();
+  genreOpen = !genreOpen;
+  genreDropdown.style.display = genreOpen ? "flex" : "none";
+});
+
+document.addEventListener("click", e => {
+  if (!genreToggle.parentElement.contains(e.target)) {
+    genreOpen = false;
+    genreDropdown.style.display = "none";
+  }
+});
+
+/* MOBILE MENU TOGGLE */
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click", () => {
+  menuToggle.classList.toggle("active");
+  navLinks.classList.toggle("show");
+});
 </script>
-
 </body>
 </html>
