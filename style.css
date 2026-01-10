@@ -1,5 +1,5 @@
 /* =========================
-   RESET & BASE
+   RESET & FONTS
 ========================= */
 * {
   margin: 0;
@@ -8,18 +8,13 @@
 }
 
 body {
-  background: #0a0f1c;
+  background-color: #0a0f1c;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
   color: #e8ffff;
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 15, 28, 0.85);
-  z-index: -1;
 }
 
 h1, h3 {
@@ -30,8 +25,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Dark overlay for readability */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(10, 15, 28, 0.85);
+  z-index: -1;
+}
+
 /* =========================
-   APP
+   APP CONTAINER
 ========================= */
 .app {
   max-width: 1200px;
@@ -41,212 +46,126 @@ html {
 }
 
 /* =========================
-   NAVBAR
+   NAVBAR (FIXED AT TOP)
 ========================= */
 .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.15);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,255,255,0.15);
   z-index: 1000;
+  box-shadow: 0 8px 25px rgba(0, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
 }
 
-/* LOGO */
+/* =========================
+   LOGO
+========================= */
 .logo img {
   width: 40px;
   height: 40px;
+  object-fit: contain;
 }
 
-/* SEARCH BAR */
+/* =========================
+   SEARCH BAR - SLIMMER & CLEANER
+========================= */
 .search-container {
   flex: 1;
   max-width: 650px;
+  margin: 0 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   padding: 0.4rem 1rem;
-  border: 1.5px solid rgba(0,255,255,0.25);
+  border: 1.5px solid rgba(0, 255, 255, 0.25);
+  transition: all 0.3s ease;
+  min-height: 44px;
+}
+
+.search-container:focus-within {
+  border-color: #00ffff;
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 .search-container input {
-  flex: 1;
   background: transparent;
   border: none;
-  outline: none;
+  outline: none !important;           /* Force remove outline */
   color: #e8ffff;
-  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  width: 100%;
+  padding: 0.3rem 0;
 }
 
 .search-container input::placeholder {
   color: #777;
+  font-weight: 300;
 }
 
 #searchButton {
   background: none;
   border: none;
-  color: #00ffff;
   cursor: pointer;
-}
-
-/* NAV LINKS */
-.nav-links {
+  color: #00ffff;
+  padding: 0.4rem;
   display: flex;
-  list-style: none;
-  gap: 2rem;
   align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  outline: none;                      /* Remove outline on button */
 }
 
-.nav-links a {
-  text-decoration: none;
-  color: #ccc;
+#searchButton:hover {
+  color: #66ffff;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-  color: #00ffff;
+#searchButton:active {
+  transform: none;
 }
 
-/* GENRE DROPDOWN */
-.genre-menu {
-  position: relative;
+.search-container svg {
+  fill: currentColor;
 }
 
-.genre-dropdown {
-  position: absolute;
-  top: 140%;
-  left: 0;
-  display: none;
-  flex-direction: column;
-  background: rgba(0,0,0,0.9);
-  border: 1px solid rgba(0,255,255,0.25);
-  border-radius: 14px;
-  min-width: 180px;
-  box-shadow: 0 15px 35px rgba(0,255,255,0.25);
-  z-index: 2000;
-}
-
-.genre-dropdown li a {
-  display: block;
-  padding: 0.6rem 1.2rem;
-  color: #ccc !important;
-  text-decoration: none;
-}
-
-.genre-dropdown li a:hover {
-  background: rgba(0,255,255,0.15);
-  color: #00ffff !important;
-}
-
-/* Show dropdown on hover */
-.genre-menu:hover .genre-dropdown {
-  display: flex;
-}
-
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 6rem 1rem 4rem;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  color: #00ffff;
-  text-shadow: 0 0 20px rgba(0,255,255,0.5);
-}
-
-.hero p {
-  color: #aaa;
-}
-
-/* GRID & CARDS */
-.manhwa-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.8rem;
-  padding: 2rem 1rem;
-}
-
-.card {
-  position: relative;
-  height: 320px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #050812;
-  transition: transform 0.4s, box-shadow 0.4s;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0,255,255,0.35);
-}
-
-.card-title-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1.5rem 1rem 0.9rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.15), transparent);
-  pointer-events: none;
-}
-
-.card-title-overlay span {
-  display: block;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #00ffff;
-  text-shadow:
-    0 0 6px rgba(0,255,255,0.35),
-    0 2px 6px rgba(0,0,0,0.9);
-}
-
-.coming-soon {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-.lock-icon {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 1.1rem;
+/* Remove mobile tap highlight (cyan flash) + focus outlines */
+.search-container,
+.search-container input,
+#searchButton,
+.menu-toggle,
+.menu-toggle span,
+a,
+button {
+  -webkit-tap-highlight-color: transparent;   /* Only this is needed for tap flash */
+  outline: none;                              /* Removes yellow/orange focus rings */
 }
 
 /* =========================
-   MOBILE MENU
+   HAMBURGER MENU
 ========================= */
 .menu-toggle {
   display: none;
-  flex-direction: column;
-  justify-content: space-between;
   width: 30px;
   height: 22px;
+  position: relative;
   cursor: pointer;
+  z-index: 1100;
 }
 
 .menu-toggle span {
   display: block;
   height: 4px;
   background-color: #00ffff;
+  margin: 4px 0;
   border-radius: 2px;
   transition: all 0.3s ease;
 }
@@ -257,7 +176,7 @@ html {
 }
 
 .menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px,5px);
+  transform: rotate(45deg) translate(5px, 5px);
 }
 
 .menu-toggle.active span:nth-child(2) {
@@ -265,30 +184,189 @@ html {
 }
 
 .menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(6px,-6px);
+  transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* MOBILE RESPONSIVE */
+/* =========================
+   NAV LINKS
+========================= */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #00ffff;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+  text-align: center;
+  padding: 6rem 1rem 4rem;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  color: #00ffff;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #aaa;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* =========================
+   MANHWA GRID
+========================= */
+.manhwa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.8rem;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background: #050812;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  height: 320px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(transparent, #050812);
+  pointer-events: none;
+}
+
+.card h3 {
+  position: absolute;
+  bottom: 2.8rem;
+  left: 1rem;
+  font-size: 1.2rem;
+  color: #00ffff;
+  text-shadow: 0 2px 10px #000;
+  z-index: 1;
+}
+
+.card span {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1rem;
+  font-size: 0.9rem;
+  color: #ccc;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 15px 35px rgba(0, 255, 255, 0.35);
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: flex;
+    display: block;
+  }
+
+  .navbar {
+    padding: 1rem;
+  }
+
+  .search-container {
+    margin: 0 1rem;
+    max-width: none;
+    padding: 0.35rem 0.9rem;
+    min-height: 42px;
+  }
+
+  .search-container input {
+    font-size: 1rem;
+  }
+
+  .logo img {
+    width: 36px;
+    height: 36px;
   }
 
   .nav-links {
     display: none;
     position: absolute;
-    top: 80px;
-    right: 1rem;
-    flex-direction: column;
-    background: rgba(0,0,0,0.9);
-    padding: 1.2rem;
+    top: 70px;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1.5rem;
     border-radius: 16px;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
     width: 90%;
     max-width: 300px;
-    gap: 1rem;
   }
 
   .nav-links.show {
     display: flex;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .manhwa-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .card {
+    height: 280px;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    bottom: 2.5rem;
+  }
+
+  .card span {
+    font-size: 0.85rem;
   }
 }
