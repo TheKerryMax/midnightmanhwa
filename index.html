@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,8 +18,8 @@
       overflow: hidden;
       border-radius: 14px;
       cursor: pointer;
+      transition: transform 0.3s ease;
     }
-
     .card img {
       width: 100%;
       height: 100%;
@@ -27,30 +27,17 @@
       display: block;
       transition: transform 0.6s ease;
     }
-
     .card:hover img,
-    .card.hover img {
-      transform: scale(1.12);
-    }
-
-    /* =========================
-       FADE + TITLE (SPAN)
-    ========================= */
+    .card.hover img { transform: scale(1.12); }
     .card-title-overlay {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       padding: 1.5rem 1rem 0.9rem;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.55),
-        rgba(0,0,0,0.15),
-        transparent
-      );
+      background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.15), transparent);
       pointer-events: none;
     }
-
     .card-title-overlay span {
       display: block;
       font-family: 'Orbitron', sans-serif;
@@ -58,31 +45,12 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       color: #00ffff;
-      text-shadow:
-        0 0 6px rgba(0,255,255,0.35),
-        0 2px 6px rgba(0,0,0,0.9);
+      text-shadow: 0 0 6px rgba(0,255,255,0.35), 0 2px 6px rgba(0,0,0,0.9);
     }
-
     .card:hover,
-    .card.hover {
-      box-shadow: 0 18px 45px rgba(0,255,255,0.4);
-    }
-
-    /* =========================
-       FAKE MANHWA (LOCK)
-    ========================= */
-    .coming-soon {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .lock-icon {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      font-size: 1.1rem;
-      text-shadow: 0 0 6px rgba(0,0,0,0.8);
-    }
+    .card.hover { box-shadow: 0 18px 45px rgba(0,255,255,0.4); }
+    .coming-soon { opacity: 0.6; pointer-events: none; }
+    .lock-icon { position: absolute; top: 12px; right: 12px; font-size: 1.1rem; text-shadow: 0 0 6px rgba(0,0,0,0.8); }
 
     /* =========================
        HERO TITLE & SECTION FIX
@@ -91,7 +59,6 @@
       text-align: center;
       padding: 4rem 1rem 2rem;
     }
-
     .hero h1 {
       font-size: 2.8rem;
       line-height: 1.1;
@@ -101,30 +68,11 @@
       word-wrap: break-word;
       white-space: normal;
     }
-
-    .hero p {
-      font-size: 1.2rem;
-      color: #aaa;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* MOBILE HERO TITLE: one line */
+    .hero p { font-size: 1.2rem; color: #aaa; max-width: 600px; margin: 0 auto; }
     @media (max-width: 768px) {
-      .hero {
-        padding: 3rem 1rem 1.5rem;
-      }
-
-      .hero h1 {
-        font-size: 2rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
+      .hero { padding: 3rem 1rem 1.5rem; }
+      .hero h1 { font-size: 2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .hero p { font-size: 1rem; }
     }
 
     /* =========================
@@ -138,37 +86,30 @@
       text-align: center;
       margin-top: 2rem;
       text-shadow: 0 0 15px #00ffff, 0 2px 10px #000;
-
-      /* Animation */
       opacity: 0;
       transform: scale(0.8);
       transition: all 1.5s ease;
     }
-
     #easterEggMessage.show {
       display: block;
       opacity: 1;
       transform: scale(1);
       animation: bounceGlow 3s infinite alternate;
     }
-
     @keyframes bounceGlow {
-      0% {
-        transform: scale(0.95);
-        text-shadow: 0 0 8px #00ffff, 0 2px 6px #000;
-      }
-      50% {
-        transform: scale(1.05);
-        text-shadow: 0 0 20px #00ffff, 0 4px 12px #000;
-      }
-      100% {
-        transform: scale(1);
-        text-shadow: 0 0 12px #00ffff, 0 2px 6px #000;
-      }
+      0% { transform: scale(0.95); text-shadow: 0 0 8px #00ffff, 0 2px 6px #000; }
+      50% { transform: scale(1.05); text-shadow: 0 0 20px #00ffff, 0 4px 12px #000; }
+      100% { transform: scale(1); text-shadow: 0 0 12px #00ffff, 0 2px 6px #000; }
+    }
+
+    .manhwa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+      gap: 1rem;
+      padding: 2rem 1rem;
     }
   </style>
 </head>
-
 <body>
 <div class="app">
 
@@ -206,43 +147,7 @@
   </section>
 
   <!-- MANHWA GRID -->
-  <section class="manhwa-grid">
-
-    <!-- REAL MANHWA -->
-    <a href="Genres/Manhwa/King%20of%20the%20Octagon/chapters.html"
-       class="card manhwa-link">
-      <img src="Images/king-of-octagon-cover.jpg" alt="King of the Octagon">
-      <div class="card-title-overlay">
-        <span>King of the Octagon</span>
-      </div>
-    </a>
-
-    <!-- FAKE MANHWA -->
-    <div class="card coming-soon">
-      <span class="lock-icon">🔒</span>
-      <img src="Images/king-of-octagon-cover.jpg" alt="Locked">
-      <div class="card-title-overlay">
-        <span>New Manhwa</span>
-      </div>
-    </div>
-
-    <div class="card coming-soon">
-      <span class="lock-icon">🔒</span>
-      <img src="Images/king-of-octagon-cover.jpg" alt="Locked">
-      <div class="card-title-overlay">
-        <span>New Manhwa</span>
-      </div>
-    </div>
-
-    <div class="card coming-soon">
-      <span class="lock-icon">🔒</span>
-      <img src="Images/king-of-octagon-cover.jpg" alt="Locked">
-      <div class="card-title-overlay">
-        <span>New Manhwa</span>
-      </div>
-    </div>
-
-  </section>
+  <section class="manhwa-grid" id="manhwaGrid"></section>
 
   <!-- EASTER EGG MESSAGE -->
   <div id="easterEggMessage">I Love Thin Nadi Soe, So Much</div>
@@ -250,24 +155,7 @@
 </div>
 
 <script>
-  /* DOUBLE TAP PREVIEW */
-  document.querySelectorAll(".manhwa-link").forEach(card => {
-    let tapped = false;
-    card.addEventListener("click", e => {
-      if (!tapped) {
-        e.preventDefault();
-        tapped = true;
-        card.classList.add("hover");
-
-        setTimeout(() => {
-          tapped = false;
-          card.classList.remove("hover");
-        }, 900);
-      }
-    });
-  });
-
-  /* MOBILE NAV */
+  // MOBILE NAV
   const menuToggle = document.getElementById("menuToggle");
   const navLinks = document.getElementById("navLinks");
   menuToggle.addEventListener("click", () => {
@@ -275,49 +163,127 @@
     navLinks.classList.toggle("show");
   });
 
-  /* =========================
-     LIVE SEARCH FOR MANHWA CARDS + EASTER EGG
-  ========================= */
-  const searchInput = document.getElementById("searchInput");
-  const manhwaCards = document.querySelectorAll(".manhwa-grid .card");
-  const easterEggMessage = document.getElementById("easterEggMessage");
+  // =========================
+  // MANHWA DATA (50+ fake manhwa)
+  // =========================
+  const manhwaData = [
+    {"title":"King of the Octagon","image":"Images/king-of-octagon-cover.jpg","link":"Genres/Manhwa/King%20of%20the%20Octagon/chapters.html","locked":false},
+    {"title":"Shadow Dragon","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Moonlight Sonata","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Blood Harvest","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Cyber Ninja","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Eternal Night","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Ghost of the Abyss","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Dragon’s Wrath","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Silver Blade","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Vampire Kiss","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Nightmare Realm","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Quantum Leap","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Black Lotus","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Crimson Dawn","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Phantom Blade","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Lunar Eclipse","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Starlight Assassin","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Twilight Saga","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Chaos Reign","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Iron Fist","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Silent Whispers","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Dragon Slayer","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Phantom Heart","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Neon Shadows","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Blood Moon","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Dark Horizon","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Silver Fang","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Obsidian Blade","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Twisted Fate","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Phoenix Rising","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Demon Hunter","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Shadow Realm","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Nightfall","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Crimson Shadow","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Lunar Knight","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Silver Wing","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Midnight Curse","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Golden Fang","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Phantom Soul","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Shadow Assassin","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Bloodstorm","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Neon Eclipse","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Twilight Reign","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Iron Shadows","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Crimson Heart","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Dark Legacy","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Silver Horizon","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Eclipse Blade","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Phantom Realm","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Moonlit Path","image":"Images/placeholder.jpg","link":"#","locked":true},
+    {"title":"Dragon Reborn","image":"Images/placeholder.jpg","link":"#","locked":true}
+  ];
 
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim();
+  const manhwaGrid = document.getElementById("manhwaGrid");
 
-    // Easter egg check
-    if (query === "Swt & Tnds") {
-      easterEggMessage.classList.add("show");
-    } else {
-      easterEggMessage.classList.remove("show");
-    }
+  // =========================
+  // RENDER CARDS FUNCTION
+  // =========================
+  function renderManhwaCards(data) {
+    manhwaGrid.innerHTML = '';
+    data.forEach(item => {
+      const card = document.createElement(item.locked ? 'div' : 'a');
+      card.className = 'card' + (item.locked ? ' coming-soon' : ' manhwa-link');
+      if (!item.locked) card.href = item.link;
 
-    // Normal live search
-    const lowerQuery = query.toLowerCase();
-    manhwaCards.forEach(card => {
-      const titleSpan = card.querySelector(".card-title-overlay span");
-      const title = titleSpan.textContent.toLowerCase();
+      const img = document.createElement('img');
+      img.src = item.image;
+      img.alt = item.title;
+      card.appendChild(img);
 
-      if (title.includes(lowerQuery)) {
-        card.style.display = "";
-      } else {
-        card.style.display = "none";
+      if (item.locked) {
+        const lock = document.createElement('span');
+        lock.className = 'lock-icon';
+        lock.textContent = '🔒';
+        card.appendChild(lock);
+      }
+
+      const overlay = document.createElement('div');
+      overlay.className = 'card-title-overlay';
+      const span = document.createElement('span');
+      span.textContent = item.title;
+      overlay.appendChild(span);
+      card.appendChild(overlay);
+
+      manhwaGrid.appendChild(card);
+
+      if (!item.locked) {
+        let tapped = false;
+        card.addEventListener('click', e => {
+          if (!tapped) {
+            e.preventDefault();
+            tapped = true;
+            card.classList.add('hover');
+            setTimeout(() => { tapped = false; card.classList.remove('hover'); }, 900);
+          }
+        });
       }
     });
+  }
+
+  renderManhwaCards(manhwaData);
+
+  // =========================
+  // SEARCH + EASTER EGG
+  // =========================
+  const searchInput = document.getElementById('searchInput');
+  const easterEggMessage = document.getElementById('easterEggMessage');
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim();
+    if (query === "Swt & Tnds") easterEggMessage.classList.add('show');
+    else easterEggMessage.classList.remove('show');
+
+    const lowerQuery = query.toLowerCase();
+    const filtered = manhwaData.filter(item => item.title.toLowerCase().includes(lowerQuery));
+    renderManhwaCards(filtered);
   });
 </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
