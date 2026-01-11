@@ -1,206 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Midnight Manhwa</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midnight Manhwa</title>
 
-<style>
-/* =========================
-   RESET & BASE
-========================= */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#0a0a0a;color:#eee;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
 
-/* =========================
-   TOP NAVBAR + HERO
-========================= */
-.topbar{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:0.5rem 1rem;
-  position:sticky;top:0;background:#070707;z-index:100;
-  box-shadow:0 2px 12px rgba(0,255,255,0.1);
-}
+  <style>
+    /* =========================
+       HERO FIX
+    ========================= */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 1.5rem;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      line-height: 1.1;
+      color: #00ffff;
+      text-shadow: 0 0 18px rgba(0,255,255,0.45);
+      margin-bottom: 0.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #aaa;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-.hero-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:2.5rem;
-  color:#00ffff; /* old UI color */
-  text-shadow:0 0 20px rgba(0,255,255,0.5);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  cursor:default;
-  transition:0.3s;
-}
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 0.95rem;
+      }
+    }
 
-.topbar-left, .topbar-right{
-  display:flex;align-items:center;gap:0.5rem;
-}
+    /* =========================
+       NAVBAR SIZE FIX
+    ========================= */
+    .navbar {
+      padding: 0.6rem 1rem;
+    }
 
-/* SEARCH ICON + EXPANDING SEARCH BAR */
-#searchIcon{
-  font-size:1.6rem;color:#00ffff;cursor:pointer;transition:0.3s;
-}
-#searchInput{
-  width:0; opacity:0; padding:0.4rem 1rem; border-radius:50px; border:none; outline:none;
-  background:#111; color:#00ffff; transition:0.5s ease; margin-left:0.5rem;
-  box-shadow:0 0 10px rgba(0,255,255,0.2);
-}
-#searchInput.show{width:250px; opacity:1;}
+    /* =========================
+       SEARCH BAR FIX
+    ========================= */
+    .search-container input {
+      width: 260px;
+    }
 
-/* MENU TOGGLE */
-.menu-toggle{display:flex;flex-direction:column;cursor:pointer;gap:4px;}
-.menu-toggle span{display:block;height:3px;width:25px;background:#00ffff;border-radius:2px;transition:0.3s;}
-.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
-.menu-toggle.active span:nth-child(2){opacity:0;}
-.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
+    @media (max-width: 768px) {
+      .search-container input {
+        width: 150px;
+      }
+    }
 
-/* SIDE MENU */
-.side-menu{
-  position:fixed;top:0;right:-220px;width:200px;height:100%;background:#111;
-  display:flex;flex-direction:column;padding:2rem 1rem;gap:1.5rem;transition:0.5s;
-}
-.side-menu.show{right:0;}
-.side-menu a{
-  color:#00ffff;font-weight:600;font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;
-  transition:0.3s;
-}
-.side-menu a:hover{color:#0affff;}
+    /* =========================
+       MANHWA GRID
+    ========================= */
+    .manhwa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      padding: 2rem 1rem;
+    }
 
-/* =========================
-   MANHWA GRID (OLD UI STYLE)
-========================= */
-.manhwa-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:1rem;padding:2rem 1rem;
-}
-.card{
-  position:relative;overflow:hidden;border-radius:14px;
-  cursor:pointer;transition: transform 0.3s, box-shadow 0.3s;
-  background:#111;box-shadow:0 4px 12px rgba(0,255,255,0.1);
-}
-.card img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;display:block;}
-.card:hover img,.card.hover img{transform:scale(1.12);}
-.card-title-overlay{position:absolute;bottom:0;left:0;right:0;padding:1rem;
-background:linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.15));pointer-events:none;}
-.card-title-overlay span{
-display:block;font-family:'Orbitron',sans-serif;font-size:0.9rem;
-letter-spacing:1px;text-transform:uppercase;color:#00ffff;
-text-shadow:0 0 6px rgba(0,255,255,0.35),0 2px 6px rgba(0,0,0,0.9);}
-.genre-tag{
-  position:absolute;top:8px;left:8px;padding:2px 6px;font-size:0.7rem;
-  background:linear-gradient(90deg,#00ffff,#00dfff);color:#000;font-weight:600;border-radius:4px;
-  text-transform:uppercase;box-shadow:0 0 6px rgba(0,255,255,0.3);}
-.coming-soon{opacity:0.6;pointer-events:none;}
-.lock-icon{
-  position:absolute;top:12px;right:12px;font-size:1.2rem;color:#fff;
-  background:rgba(0,0,0,0.6);border-radius:50%;padding:4px;text-shadow:0 0 6px rgba(0,0,0,0.8);}
+    /* =========================
+       CARD (UNCHANGED STYLE)
+    ========================= */
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .card:hover img,
+    .card.hover img {
+      transform: scale(1.12);
+    }
+    .card-title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.4rem 1rem 0.9rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    }
+    .card-title-overlay span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      color: #00ffff;
+      text-shadow: 0 0 6px rgba(0,255,255,0.35);
+      text-transform: uppercase;
+    }
+    .coming-soon {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .lock-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.1rem;
+    }
 
-/* NO DATA */
-#noData{display:none;text-align:center;color:red;font-family:'Orbitron',sans-serif;font-size:1.3rem;margin-top:2rem;}
+    /* =========================
+       NO DATA
+    ========================= */
+    #noData {
+      display: none;
+      text-align: center;
+      color: red;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      margin-top: 2rem;
+    }
 
-/* EASTER EGG */
-#easterEggMessage{display:none;font-family:'Orbitron',sans-serif;font-size:2rem;color:#00ffff;text-align:center;margin-top:2rem;
-text-shadow:0 0 15px #00ffff,0 2px 10px #000;opacity:0;transform:scale(0.8);transition:all 1.5s ease;}
-#easterEggMessage.show{display:block;opacity:1;transform:scale(1);animation:bounceGlow 3s infinite alternate;}
-@keyframes bounceGlow{0%{transform:scale(0.95);text-shadow:0 0 8px #0fffff,0 2px 6px #000;}50%{transform:scale(1.05);text-shadow:0 0 20px #0fffff,0 4px 12px #000;}100%{transform:scale(1);text-shadow:0 0 12px #0fffff,0 2px 6px #000;}}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-  .topbar{flex-wrap:wrap;gap:0.3rem;padding:0.5rem 0.8rem;}
-  .hero-title{font-size:1.5rem;white-space:normal;text-align:center;width:100%;margin:0.5rem 0;}
-  #searchInput.show{width:150px;}
-  .manhwa-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
-}
-</style>
+    /* =========================
+       EASTER EGG
+    ========================= */
+    #easterEggMessage {
+      display: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #00ffff;
+      text-align: center;
+      margin-top: 2rem;
+      text-shadow: 0 0 15px #00ffff;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: 1.2s ease;
+    }
+    #easterEggMessage.show {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
 </head>
-<body>
 
-<!-- TOPBAR -->
-<div class="topbar">
-  <div class="topbar-left">
-    <span id="searchIcon">🔍</span>
-    <input type="text" id="searchInput" placeholder="Search...">
-  </div>
-  <div class="hero-title">Midnight Manhwa</div>
-  <div class="topbar-right">
+<body>
+<div class="app">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="favicon.ico" alt="Midnight Manhwa Logo">
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search...">
+      <button id="searchButton">🔍</button>
+    </div>
+
     <div class="menu-toggle" id="menuToggle">
       <span></span><span></span><span></span>
     </div>
-  </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a class="active">Home</a></li>
+      <li><a>Genres</a></li>
+      <li><a>About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Midnight Manhwa</h1>
+    <p>Read dark fantasy, action, and mystery manhwa.</p>
+  </section>
+
+  <!-- GRID -->
+  <section class="manhwa-grid" id="manhwaGrid"></section>
+
+  <div id="noData">No data found!</div>
+  <div id="easterEggMessage">I Love Thin Nadi Soe, So Much</div>
 </div>
-
-<!-- SIDE MENU -->
-<div class="side-menu" id="sideMenu">
-  <a href="#">Home</a>
-  <a href="#">Genres</a>
-  <a href="#">About</a>
-</div>
-
-<!-- MANHWA GRID -->
-<section class="manhwa-grid" id="manhwaGrid"></section>
-
-<!-- NO DATA FOUND -->
-<div id="noData">No data found!</div>
-
-<!-- EASTER EGG -->
-<div id="easterEggMessage">I Love Thin Nadi Soe, So Much</div>
 
 <script>
-const menuToggle=document.getElementById("menuToggle");
-const sideMenu=document.getElementById("sideMenu");
-menuToggle.addEventListener("click",()=>{menuToggle.classList.toggle("active");sideMenu.classList.toggle("show");});
+  const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+  menuToggle.onclick = () => {
+    menuToggle.classList.toggle("active");
+    navLinks.classList.toggle("show");
+  };
 
-const searchIcon=document.getElementById("searchIcon");
-const searchInput=document.getElementById("searchInput");
-searchIcon.addEventListener("click",()=>{searchInput.classList.toggle("show");searchInput.focus();});
+  const manhwaGrid = document.getElementById("manhwaGrid");
+  const searchInput = document.getElementById("searchInput");
+  const noData = document.getElementById("noData");
+  const easterEggMessage = document.getElementById("easterEggMessage");
+  let manhwaData = [];
 
-const manhwaGrid=document.getElementById("manhwaGrid");
-const noData=document.getElementById("noData");
-const easterEggMessage=document.getElementById("easterEggMessage");
-let manhwaData=[];
+  fetch("Json/manhwa.json")
+    .then(r => r.json())
+    .then(d => {
+      manhwaData = d;
+      render(d);
+    })
+    .catch(() => {
+      manhwaGrid.innerHTML = "<p style='color:red;text-align:center'>Failed to load data!</p>";
+    });
 
-fetch('Json/manhwa.json')
-  .then(resp=>resp.json())
-  .then(data=>{manhwaData=data;renderManhwaCards(manhwaData);})
-  .catch(err=>{console.error('Failed to load manhwa.json',err);noData.style.display='block';});
+  function render(data) {
+    manhwaGrid.innerHTML = "";
+    noData.style.display = data.length ? "none" : "block";
 
-function renderManhwaCards(data){
-  manhwaGrid.innerHTML='';
-  if(data.length===0){noData.style.display='block';}else{noData.style.display='none';}
-  data.forEach(item=>{
-    const card=document.createElement(item.locked?'div':'a');
-    card.className='card'+(item.locked?' coming-soon':' manhwa-link');
-    if(!item.locked)card.href=item.link;
+    data.forEach(item => {
+      const card = document.createElement(item.locked ? "div" : "a");
+      card.className = "card" + (item.locked ? " coming-soon" : "");
+      if (!item.locked) card.href = item.link;
 
-    const img=document.createElement('img'); img.src=item.image; img.alt=item.title; card.appendChild(img);
+      card.innerHTML = `
+        <img src="${item.image}">
+        ${item.locked ? '<span class="lock-icon">🔒</span>' : ''}
+        <div class="card-title-overlay"><span>${item.title}</span></div>
+      `;
+      manhwaGrid.appendChild(card);
+    });
+  }
 
-    const genreTag=document.createElement('span'); genreTag.className='genre-tag'; genreTag.textContent=item.genre; card.appendChild(genreTag);
-
-    if(item.locked){const lock=document.createElement('span'); lock.className='lock-icon'; lock.textContent='🔒'; card.appendChild(lock);}
-
-    const overlay=document.createElement('div'); overlay.className='card-title-overlay';
-    const span=document.createElement('span'); span.textContent=item.title; overlay.appendChild(span); card.appendChild(overlay);
-
-    manhwaGrid.appendChild(card);
-
-    if(!item.locked){let tapped=false; card.addEventListener('click',e=>{if(!tapped){e.preventDefault();tapped=true;card.classList.add('hover');setTimeout(()=>{tapped=false;card.classList.remove('hover');},900);}});}
-  });
-}
-
-searchInput.addEventListener('input',()=>{
-  const query=searchInput.value.trim();
-  if(query==="Swt & Tnds") easterEggMessage.classList.add('show');
-  else easterEggMessage.classList.remove('show');
-
-  const lowerQuery=query.toLowerCase();
-  const filtered=manhwaData.filter(item=>item.title.toLowerCase().includes(lowerQuery));
-  renderManhwaCards(filtered);
-});
+  searchInput.oninput = () => {
+    const q = searchInput.value.trim();
+    easterEggMessage.classList.toggle("show", q === "Swt & Tnds");
+    render(manhwaData.filter(m => m.title.toLowerCase().includes(q.toLowerCase())));
+  };
 </script>
 </body>
 </html>
